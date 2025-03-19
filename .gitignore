@@ -44,6 +44,9 @@ WiredTiger*
 # File generati da strumenti di monitoraggio e metriche
 metrics.*
 
+# Cartelle temporanee
+temp/
+
 # Credentials and sensitive files
 admin-credentials.txt
 *credentials*.txt
