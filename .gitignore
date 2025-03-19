@@ -29,8 +29,20 @@ dist-ssr
 # Environment variables
 .env
 
-# MongoDB data directory
+# MongoDB data directory e file di grandi dimensioni
 mongodb_data/
+*.wt
+WiredTiger*
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.flv
+*.webm
+*.mkv
+
+# File generati da strumenti di monitoraggio e metriche
+metrics.*
 
 # Credentials and sensitive files
 admin-credentials.txt
