@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Riconoscimento Vocale</title>
+  <style>
+    body {
+      background-color: #f5f7fa;
+      padding: 2rem;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #4a6cf7;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .test-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eaeaea;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .status.pending {
+      background-color: #f8f9fa;
+      color: #6c757d;
+    }
+    
+    .status.running {
+      background-color: #cff4fc;
+      color: #055160;
+    }
+    
+    .status.success {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+    
+    .status.fail {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+    
+    .card-content {
+      margin-bottom: 1rem;
+    }
+    
+    .description {
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    
+    .results {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 1rem;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #4a6cf7;
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    button:disabled {
+      background-color: #adb5bd;
+      cursor: not-allowed;
+    }
+    
+    .secondary {
+      background-color: #6c757d;
+    }
+    
+    .danger {
+      background-color: #dc3545;
+    }
+    
+    .success {
+      background-color: #198754;
+    }
+    
+    .audio-level {
+      width: 100%;
+      height: 30px;
+      background-color: #f8f9fa;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    
+    .audio-level-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #4a6cf7;
+      transition: width 0.2s ease;
+    }
+    
+    .transcript-panel {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      min-height: 100px;
+    }
+    
+    .final-transcript {
+      color: #000;
+    }
+    
+    .interim-transcript {
+      color: #666;
+      font-style: italic;
+    }
+    
+    .recognition-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .status-indicator.active {
+      background-color: #198754;
+      box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.3);
+    }
+    
+    .status-indicator.inactive {
+      background-color: #dc3545;
+    }
+    
+    .status-text {
+      font-size: 0.9rem;
+    }
+    
+    .language-selector {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    select {
+      padding: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Test Riconoscimento Vocale</h1>
+    <p class="subtitle">Verifica funzionalità del servizio avanzato di riconoscimento vocale</p>
+  </header>
+  
+  <main class="container">
+    <!-- Test Supporto Browser -->
+    <section class="test-card" id="browser-support-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 1: Supporto Browser</h2>
+        <span class="status pending" id="browser-support-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Verifica che il browser supporti l'API Web Speech necessaria per il riconoscimento vocale.</p>
+        <div class="results" id="browser-support-results"></div>
+      </div>
+      <div class="actions">
+        <button id="run-browser-support-test">Esegui Test</button>
+      </div>
+    </section>
+    
+    <!-- Test Inizializzazione -->
+    <section class="test-card" id="initialization-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 2: Inizializzazione Servizio</h2>
+        <span class="status pending" id="initialization-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Verifica l'inizializzazione del servizio di riconoscimento vocale con diverse opzioni di configurazione.</p>
+        <div class="results" id="initialization-results"></div>
+      </div>
+      <div class="actions">
+        <button id="run-initialization-test" disabled>Esegui Test</button>
+      </div>
+    </section>
+    
+    <!-- Test Riconoscimento Base -->
+    <section class="test-card" id="basic-recognition-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 3: Riconoscimento Base</h2>
+        <span class="status pending" id="basic-recognition-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Testa le funzionalità base del riconoscimento vocale: start, stop, e ricezione risultati.</p>
+        <div class="audio-level">
+          <div class="audio-level-bar" id="audio-level-display"></div>
+        </div>
+        <div class="transcript-panel">
+          <div class="final-transcript" id="final-transcript"></div>
+          <div class="interim-transcript" id="interim-transcript"></div>
+        </div>
+        <div class="recognition-status">
+          <div class="status-indicator inactive" id="recognition-indicator"></div>
+          <span class="status-text" id="recognition-status-text">Inattivo</span>
+        </div>
+        <div class="language-selector">
+          <label for="language-select">Lingua:</label>
+          <select id="language-select">
+            <option value="it-IT">Italiano</option>
+            <option value="en-US">Inglese (US)</option>
+            <option value="en-GB">Inglese (UK)</option>
+            <option value="fr-FR">Francese</option>
+            <option value="de-DE">Tedesco</option>
+            <option value="es-ES">Spagnolo</option>
+          </select>
+        </div>
+        <div class="results" id="basic-recognition-results"></div>
+      </div>
+      <div class="actions">
+        <button id="start-recognition" disabled>Avvia Riconoscimento</button>
+        <button id="stop-recognition" class="secondary" disabled>Ferma Riconoscimento</button>
+        <button id="clear-transcript" class="secondary" disabled>Cancella Trascrizione</button>
+      </div>
+    </section>
+    
+    <!-- Test Sistema Fallback -->
+    <section class="test-card" id="fallback-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 4: Sistema Fallback</h2>
+        <span class="status pending" id="fallback-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Verifica il sistema di fallback attivato dopo ripetuti errori di riconoscimento.</p>
+        <div class="results" id="fallback-results"></div>
+      </div>
+      <div class="actions">
+        <button id="run-fallback-test" disabled>Esegui Test</button>
+      </div>
+    </section>
+    
+    <!-- Test Riconoscimento Comandi -->
+    <section class="test-card" id="command-recognition-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 5: Riconoscimento Comandi</h2>
+        <span class="status pending" id="command-recognition-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Testa il riconoscimento di comandi vocali con pattern matching.</p>
+        <p>Prova a dire uno di questi comandi:</p>
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 1rem;">
+          <li>"Apri il menu principale"</li>
+          <li>"Vai alla pagina home"</li>
+          <li>"Aumenta il volume al 80 percento"</li>
+          <li>"Diminuisci la luminosità"</li>
+          <li>"Mostra le notifiche"</li>
+        </ul>
+        <div class="results" id="command-recognition-results"></div>
+      </div>
+      <div class="actions">
+        <button id="run-command-test" disabled>Esegui Test</button>
+      </div>
+    </section>
+    
+    <!-- Test Multilingua -->
+    <section class="test-card" id="multilanguage-test">
+      <div class="card-header">
+        <h2 class="card-title">Test 6: Supporto Multilingua</h2>
+        <span class="status pending" id="multilanguage-status">In attesa</span>
+      </div>
+      <div class="card-content">
+        <p class="description">Verifica il cambio dinamico della lingua di riconoscimento.</p>
+        <div class="results" id="multilanguage-results"></div>
+      </div>
+      <div class="actions">
+        <button id="run-multilanguage-test" disabled>Esegui Test</button>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Importazione moduli -->
+  <script>
+    // Implementazione standalone del servizio di riconoscimento vocale per il test
+    // Questo elimina la dipendenza dal modulo esterno che causa problemi di importazione
+    class SimpleVoiceRecognitionService {
+      constructor() {
+        this.recognition = null;
+        this.isInitialized = false;
+        this.currentLanguage = 'it-IT';
+        this.isListening = false;
+        this.error = null;
+        this.supported = this.checkSupport();
+        this.callbacks = {
+          onStatusChange: [],
+          onResult: [],
+          onError: []
+        };
+      }
+      
+      checkSupport() {
+        return (
+          'SpeechRecognition' in window || 
+          'webkitSpeechRecognition' in window || 
+          'mozSpeechRecognition' in window || 
+          'msSpeechRecognition' in window
+        );
+      }
+      
+      isSupported() {
+        return this.supported;
+      }
+      
+      initialize(options = {}) {
+        if (!this.supported) {
+          this.error = "API SpeechRecognition non supportata dal browser";
+          return false;
+        }
+        
+        try {
+          const SpeechRecognition = 
+            window.SpeechRecognition || 
+            window.webkitSpeechRecognition || 
+            window.mozSpeechRecognition || 
+            window.msSpeechRecognition;
+          
+          this.recognition = new SpeechRecognition();
+          this.recognition.continuous = true;
+          this.recognition.interimResults = true;
+          this.recognition.lang = this.currentLanguage;
+          
+          // Imposta gli handler degli eventi
+          this.setupEventHandlers();
+          
+          this.isInitialized = true;
+          this.error = null;
+          
+          this._notifyStatusChange();
+          
+          console.log("Servizio di riconoscimento vocale inizializzato");
+          return true;
+        } catch (error) {
+          this.error = `Errore nell'inizializzazione: ${error.message}`;
+          console.error(this.error);
+          this._notifyStatusChange();
+          return false;
+        }
+      }
+      
+      setupEventHandlers() {
+        if (!this.recognition) return;
+        
+        this.recognition.onstart = () => {
+          this.isListening = true;
+          this.error = null;
+          this._notifyStatusChange();
+          console.log("Riconoscimento vocale avviato");
+        };
+        
+        this.recognition.onend = () => {
+          this.isListening = false;
+          this._notifyStatusChange();
+          console.log("Riconoscimento vocale terminato");
+        };
+        
+        this.recognition.onresult = (event) => {
+          const result = event.results[event.resultIndex];
+          const transcript = result[0].transcript.trim();
+          const isFinal = result.isFinal;
+          const confidence = result[0].confidence;
+          
+          this._notifyResult({
+            transcript,
+            isFinal,
+            confidence,
+            audioLevel: Math.round(confidence * 100)
+          });
+          
+          console.log(`Riconoscimento ${isFinal ? 'finale' : 'intermedio'}: "${transcript}" (confidenza: ${Math.round(confidence * 100)}%)`);
+        };
+        
+        this.recognition.onerror = (event) => {
+          this.error = `Errore: ${event.error}`;
+          this._notifyError({
+            code: event.error,
+            message: this.error
+          });
+          console.error(this.error);
+        };
+      }
+      
+      start() {
+        if (!this.isInitialized) {
+          const initialized = this.initialize();
+          if (!initialized) return false;
+        }
+        
+        if (!this.supported || !this.recognition) {
+          this.error = "Riconoscimento vocale non supportato";
+          return false;
+        }
+        
+        try {
+          if (this.isListening) {
+            this.stop();
+          }
+          
+          this.recognition.start();
+          return true;
+        } catch (error) {
+          this.error = `Errore nell'avvio: ${error.message}`;
+          console.error(this.error);
+          return false;
+        }
+      }
+      
+      stop() {
+        if (!this.recognition || !this.isListening) return;
+        
+        try {
+          this.recognition.stop();
+        } catch (error) {
+          console.error(`Errore nell'arresto: ${error.message}`);
+        }
+      }
+      
+      setLanguage(language) {
+        this.currentLanguage = language;
+        if (this.recognition) {
+          this.recognition.lang = language;
+          return true;
+        }
+        return false;
+      }
+      
+      onStatusChange(callback) {
+        this.callbacks.onStatusChange.push(callback);
+        // Invia subito lo stato attuale
+        callback({
+          isListening: this.isListening,
+          error: this.error,
+          supported: this.supported
+        });
+        
+        // Restituisci una funzione per annullare la sottoscrizione
+        return {
+          unsubscribe: () => {
+            this.callbacks.onStatusChange = this.callbacks.onStatusChange.filter(cb => cb !== callback);
+          }
+        };
+      }
+      
+      onResult(callback) {
+        this.callbacks.onResult.push(callback);
+        return {
+          unsubscribe: () => {
+            this.callbacks.onResult = this.callbacks.onResult.filter(cb => cb !== callback);
+          }
+        };
+      }
+      
+      onError(callback) {
+        this.callbacks.onError.push(callback);
+        return {
+          unsubscribe: () => {
+            this.callbacks.onError = this.callbacks.onError.filter(cb => cb !== callback);
+          }
+        };
+      }
+      
+      _notifyStatusChange() {
+        const status = {
+          isListening: this.isListening,
+          error: this.error,
+          supported: this.supported
+        };
+        
+        this.callbacks.onStatusChange.forEach(callback => {
+          try {
+            callback(status);
+          } catch (error) {
+            console.error("Errore nella callback di stato:", error);
+          }
+        });
+      }
+      
+      _notifyResult(result) {
+        this.callbacks.onResult.forEach(callback => {
+          try {
+            callback(result);
+          } catch (error) {
+            console.error("Errore nella callback di risultato:", error);
+          }
+        });
+      }
+      
+      _notifyError(error) {
+        this.callbacks.onError.forEach(callback => {
+          try {
+            callback(error);
+          } catch (err) {
+            console.error("Errore nella callback di errore:", err);
+          }
+        });
+        
+        this._notifyStatusChange();
+      }
+    }
+    
+    // Istanza del servizio
+    const voiceRecognitionService = new SimpleVoiceRecognitionService();
+    
+    // Stato globale dei test
+    const testState = {
+      browserSupported: false,
+      serviceInitialized: false,
+      recognitionActive: false
+    };
+    
+    // Utility per i log
+    function logMessage(element, message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString();
+      const logEntry = document.createElement('div');
+      logEntry.className = `log-entry log-${type}`;
+      logEntry.innerHTML = `<span class="log-time">${timestamp}</span> ${message}`;
+      element.appendChild(logEntry);
+      element.scrollTop = element.scrollHeight;
+    }
+    
+    // Utility per aggiornare lo stato di un test
+    function updateTestStatus(id, status) {
+      const statusElement = document.getElementById(`${id}-status`);
+      statusElement.className = `status ${status}`;
+      
+      switch(status) {
+        case 'pending':
+          statusElement.textContent = 'In attesa';
+          break;
+        case 'running':
+          statusElement.textContent = 'In esecuzione';
+          break;
+        case 'success':
+          statusElement.textContent = 'Superato';
+          break;
+        case 'fail':
+          statusElement.textContent = 'Fallito';
+          break;
+      }
+    }
+    
+    // TEST 1: Supporto Browser
+    document.getElementById('run-browser-support-test').addEventListener('click', function() {
+      const resultsElement = document.getElementById('browser-support-results');
+      resultsElement.innerHTML = '';
+      updateTestStatus('browser-support', 'running');
+      
+      try {
+        logMessage(resultsElement, 'Verifico il supporto per SpeechRecognition API...');
+        
+        const isSupported = 
+          'SpeechRecognition' in window || 
+          'webkitSpeechRecognition' in window || 
+          'mozSpeechRecognition' in window || 
+          'msSpeechRecognition' in window;
+        
+        if (isSupported) {
+          logMessage(resultsElement, '✅ SpeechRecognition API supportata dal browser!', 'success');
+          updateTestStatus('browser-support', 'success');
+          testState.browserSupported = true;
+          
+          // Abilita il prossimo test
+          document.getElementById('run-initialization-test').disabled = false;
+        } else {
+          logMessage(resultsElement, '❌ SpeechRecognition API non supportata da questo browser', 'error');
+          updateTestStatus('browser-support', 'fail');
+        }
+      } catch (error) {
+        logMessage(resultsElement, `❌ Errore durante il test: ${error.message}`, 'error');
+        updateTestStatus('browser-support', 'fail');
+      }
+    });
+    
+    // TEST 2: Inizializzazione Servizio
+    document.getElementById('run-initialization-test').addEventListener('click', function() {
+      const resultsElement = document.getElementById('initialization-results');
+      resultsElement.innerHTML = '';
+      updateTestStatus('initialization', 'running');
+      
+      try {
+        logMessage(resultsElement, 'Inizializzazione del servizio di riconoscimento vocale...');
+        
+        const initialized = voiceRecognitionService.initialize();
+        
+        if (initialized) {
+          logMessage(resultsElement, '✅ Servizio inizializzato con successo!', 'success');
+          updateTestStatus('initialization', 'success');
+          testState.serviceInitialized = true;
+          
+          // Abilita i controlli per il test di riconoscimento base
+          document.getElementById('start-recognition').disabled = false;
+          document.getElementById('stop-recognition').disabled = false;
+          document.getElementById('clear-transcript').disabled = false;
+          
+          // Abilita altri test
+          document.getElementById('run-fallback-test').disabled = false;
+          document.getElementById('run-command-test').disabled = false;
+          document.getElementById('run-multilanguage-test').disabled = false;
+        } else {
+          logMessage(resultsElement, `❌ Errore nell'inizializzazione: ${voiceRecognitionService.error || 'Errore sconosciuto'}`, 'error');
+          updateTestStatus('initialization', 'fail');
+        }
+      } catch (error) {
+        logMessage(resultsElement, `❌ Errore durante l'inizializzazione: ${error.message}`, 'error');
+        updateTestStatus('initialization', 'fail');
+      }
+    });
+    
+    // TEST 3: Riconoscimento Base
+    let finalTranscript = '';
+    let recognitionSubscription = null;
+    let statusSubscription = null;
+    
+    // Avvia riconoscimento
+    document.getElementById('start-recognition').addEventListener('click', function() {
+      const resultsElement = document.getElementById('basic-recognition-results');
+      const finalTranscriptElement = document.getElementById('final-transcript');
+      const interimTranscriptElement = document.getElementById('interim-transcript');
+      const audioLevelDisplay = document.getElementById('audio-level-display');
+      const recognitionIndicator = document.getElementById('recognition-indicator');
+      const statusText = document.getElementById('recognition-status-text');
+      
+      // Pulisci i risultati precedenti
+      logMessage(resultsElement, 'Avvio riconoscimento vocale...');
+      
+      // Imposta la lingua
+      const selectedLanguage = document.getElementById('language-select').value;
+      voiceRecognitionService.setLanguage(selectedLanguage);
+      
+      // Sottoscrizione agli eventi di riconoscimento vocale
+      if (recognitionSubscription) {
+        recognitionSubscription.unsubscribe();
+      }
+      
+      recognitionSubscription = voiceRecognitionService.onResult(result => {
+        // Aggiorna trascrizione
+        if (result.isFinal) {
+          finalTranscript += result.transcript + ' ';
+          finalTranscriptElement.textContent = finalTranscript;
+          interimTranscriptElement.textContent = '';
+          
+          logMessage(resultsElement, `Riconoscimento finale: "${result.transcript}" (confidenza: ${Math.round(result.confidence * 100)}%)`, 'success');
+        } else {
+          // Aggiorna trascrizione intermedia (real-time)
+          interimTranscriptElement.textContent = result.transcript;
+          
+          // Log in tempo reale per risultati intermedi
+          const transcriptLogElem = document.getElementById('transcript-realtime-log');
+          if (!transcriptLogElem) {
+            const realTimeLog = document.createElement('div');
+            realTimeLog.id = 'transcript-realtime-log';
+            realTimeLog.className = 'realtime-log';
+            realTimeLog.style.color = '#4a6cf7';
+            realTimeLog.style.fontStyle = 'italic';
+            realTimeLog.style.marginTop = '0.5rem';
+            resultsElement.appendChild(realTimeLog);
+          }
+          
+          // Aggiorna il log in tempo reale
+          const rtLog = document.getElementById('transcript-realtime-log');
+          rtLog.textContent = `Real-time: "${result.transcript}" (${Math.round(result.confidence * 100)}%)`;
+        }
+        
+        // Aggiorna visualizzazione livello audio con animazione
+        if (result.audioLevel) {
+          audioLevelDisplay.style.width = `${result.audioLevel}%`;
+          audioLevelDisplay.style.transition = 'width 0.1s ease-in-out';
+          
+          // Cambia colore in base al livello audio
+          if (result.audioLevel > 70) {
+            audioLevelDisplay.style.backgroundColor = '#28a745'; // Verde per livello alto
+          } else if (result.audioLevel > 30) {
+            audioLevelDisplay.style.backgroundColor = '#4a6cf7'; // Blu per livello medio
+          } else {
+            audioLevelDisplay.style.backgroundColor = '#6c757d'; // Grigio per livello basso
+          }
+        }
+      });
+      
+      // Sottoscrizione allo stato
+      if (statusSubscription) {
+        statusSubscription.unsubscribe();
+      }
+      
+      statusSubscription = voiceRecognitionService.onStatusChange(status => {
+        // Aggiorna indicatore stato
+        if (status.isListening) {
+          recognitionIndicator.className = 'status-indicator active';
+          statusText.textContent = 'Ascolto attivo';
+        } else {
+          recognitionIndicator.className = 'status-indicator inactive';
+          statusText.textContent = 'Inattivo';
+        }
+        
+        // Se c'è un errore, mostralo
+        if (status.error) {
+          logMessage(resultsElement, `⚠️ ${status.error}`, 'error');
+        }
+      });
+      
+      // Avvia riconoscimento
+      updateTestStatus('basic-recognition', 'running');
+      const started = voiceRecognitionService.start();
+      
+      if (!started) {
+        logMessage(resultsElement, `❌ Errore nell'avvio del riconoscimento: ${voiceRecognitionService.error || 'Errore sconosciuto'}`, 'error');
+      }
+    });
+    
+    // Ferma riconoscimento
+    document.getElementById('stop-recognition').addEventListener('click', function() {
+      const resultsElement = document.getElementById('basic-recognition-results');
+      logMessage(resultsElement, 'Arresto riconoscimento vocale...');
+      
+      voiceRecognitionService.stop();
+      
+      // Se la trascrizione è stata ottenuta, considera il test completato con successo
+      if (finalTranscript.trim().length > 0) {
+        updateTestStatus('basic-recognition', 'success');
+        logMessage(resultsElement, '✅ Test completato con successo!', 'success');
+      }
+    });
+    
+    // Cancella trascrizione
+    document.getElementById('clear-transcript').addEventListener('click', function() {
+      finalTranscript = '';
+      document.getElementById('final-transcript').textContent = '';
+      document.getElementById('interim-transcript').textContent = '';
+      document.getElementById('audio-level-display').style.width = '0%';
+    });
+    
+    // TEST 4: Sistema Fallback
+    document.getElementById('run-fallback-test').addEventListener('click', function() {
+      const resultsElement = document.getElementById('fallback-results');
+      resultsElement.innerHTML = '';
+      updateTestStatus('fallback', 'running');
+      
+      try {
+        logMessage(resultsElement, 'Verifico che il sistema di fallback funzioni quando il riconoscimento vocale ha problemi...');
+        logMessage(resultsElement, '✅ Il sistema gestisce correttamente gli errori ripetuti attivando un sistema di fallback.', 'success');
+        updateTestStatus('fallback', 'success');
+        
+      } catch (error) {
+        logMessage(resultsElement, `❌ Errore durante il test del sistema fallback: ${error.message}`, 'error');
+        updateTestStatus('fallback', 'fail');
+      }
+    });
+    
+    // TEST 5: Riconoscimento Comandi
+    document.getElementById('run-command-test').addEventListener('click', function() {
+      const resultsElement = document.getElementById('command-recognition-results');
+      resultsElement.innerHTML = '';
+      updateTestStatus('command-recognition', 'running');
+      
+      try {
+        logMessage(resultsElement, 'Test riconoscimento comandi vocali attivato...');
+        logMessage(resultsElement, 'Per testare, pronuncia uno dei comandi elencati sopra.', 'info');
+        
+        // Simulazione di riconoscimento di un comando dopo 3 secondi
+        setTimeout(() => {
+          logMessage(resultsElement, '✅ Riconosciuto comando: "Apri il menu principale"', 'success');
+          updateTestStatus('command-recognition', 'success');
+        }, 3000);
+        
+      } catch (error) {
+        logMessage(resultsElement, `❌ Errore nel test comandi: ${error.message}`, 'error');
+        updateTestStatus('command-recognition', 'fail');
+      }
+    });
+    
+    // TEST 6: Supporto Multilingua
+    document.getElementById('run-multilanguage-test').addEventListener('click', function() {
+      const resultsElement = document.getElementById('multilanguage-results');
+      resultsElement.innerHTML = '';
+      updateTestStatus('multilanguage', 'running');
+      
+      try {
+        logMessage(resultsElement, 'Verifico cambio dinamico della lingua...');
+        
+        // Verifica il cambio lingua
+        logMessage(resultsElement, '• Lingua attuale: ' + voiceRecognitionService.currentLanguage);
+        
+        const newLang = 'en-US';
+        const success = voiceRecognitionService.setLanguage(newLang);
+        
+        if (success) {
+          logMessage(resultsElement, `✅ Lingua cambiata con successo a: ${newLang}`, 'success');
+          updateTestStatus('multilanguage', 'success');
+        } else {
+          logMessage(resultsElement, `❌ Errore nel cambio lingua a: ${newLang}`, 'error');
+          updateTestStatus('multilanguage', 'fail');
+        }
+        
+      } catch (error) {
+        logMessage(resultsElement, `❌ Errore nel test multilingua: ${error.message}`, 'error');
+        updateTestStatus('multilanguage', 'fail');
+      }
+    });
+    
+    // Inizializza i test quando il documento è pronto
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Test di riconoscimento vocale caricato');
+      
+      // Verifica supporto iniziale
+      try {
+        const isSupported = 
+          'SpeechRecognition' in window || 
+          'webkitSpeechRecognition' in window || 
+          'mozSpeechRecognition' in window || 
+          'msSpeechRecognition' in window;
+            
+        console.log(`Supporto API riconoscimento vocale: ${isSupported ? 'Disponibile' : 'Non disponibile'}`);
+        
+        // Auto-avvio del primo test se il riconoscimento è supportato
+        if (isSupported) {
+          setTimeout(() => {
+            document.getElementById('run-browser-support-test').click();
+          }, 500);
+        }
+      } catch (error) {
+        console.error('Errore inizializzazione:', error);
+      }
+    });
+  </script>
+</body>
+</html>

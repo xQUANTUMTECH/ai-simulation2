@@ -1,0 +1,45 @@
+[2025-03-17T10:46:07.264Z] Avvio dei test di integrazione...
+[2025-03-17T10:46:07.266Z] =========================================
+[2025-03-17T10:46:07.267Z]   TEST DI INTEGRAZIONE CAFASSO AI ACADEMY  
+[2025-03-17T10:46:07.267Z] =========================================
+[2025-03-17T10:46:07.267Z] Data e ora: 2025-03-17T10:46:07.267Z
+[2025-03-17T10:46:07.268Z] 
+=== Test connessione MongoDB ===
+[2025-03-17T10:46:07.296Z] ✅ Connessione a MongoDB riuscita
+[2025-03-17T10:46:07.309Z] Collection disponibili: regulatory_updates, user_progress, videos, document_versions, ai_messages, ai_prompts, activity_log, auth_sessions, documents, ai_conversations, failed_login_attempts, notifications, users, course_modules, media_items, certificates, courses, case_studies, ai_model_usage, user_settings, admin_content_uploads
+[2025-03-17T10:46:07.313Z] ✅ Utente admin verificato: admin (admin@cafasso-academy.it)
+[2025-03-17T10:46:07.371Z] Statistiche collezioni: {
+  "regulatory_updates": 0,
+  "user_progress": 0,
+  "videos": 0,
+  "document_versions": 0,
+  "ai_messages": 0,
+  "ai_prompts": 0,
+  "activity_log": 0,
+  "auth_sessions": 0,
+  "documents": 0,
+  "ai_conversations": 0,
+  "failed_login_attempts": 0,
+  "notifications": 0,
+  "users": 3,
+  "course_modules": 0,
+  "media_items": 0,
+  "certificates": 0,
+  "courses": 0,
+  "case_studies": 0,
+  "ai_model_usage": 3,
+  "user_settings": 0,
+  "admin_content_uploads": 0
+}
+[2025-03-17T10:46:07.374Z] 
+=== Test autenticazione ===
+[2025-03-17T10:46:07.374Z] Test login admin...
+[2025-03-17T10:46:07.399Z] ❌ Login admin fallito
+[2025-03-17T10:46:07.400Z] Verifica utente di test...
+[2025-03-17T10:46:07.404Z] ❌ Errore nel test autenticazione: invalid json response body at http://localhost:3000/api/auth/check-user-exists reason: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+[2025-03-17T10:46:07.404Z] 
+=========================================
+[2025-03-17T10:46:07.405Z]   RISULTATO DEI TEST DI INTEGRAZIONE  
+[2025-03-17T10:46:07.405Z] =========================================
+[2025-03-17T10:46:07.405Z] Database: ✅ OK
+[2025-03-17T10:46:07.405Z] Autenticazione: ❌ FALLITO

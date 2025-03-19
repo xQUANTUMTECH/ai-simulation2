@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #1a1e2e;
+            color: white;
+        }
+        .container {
+            background-color: #2a3042;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #a855f7;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #4b5563;
+            border-radius: 0.25rem;
+            background-color: #374151;
+            color: white;
+        }
+        button {
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #9333ea;
+        }
+        .error {
+            color: #ef4444;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 0.25rem;
+        }
+        .success {
+            color: #10b981;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 0.25rem;
+        }
+        pre {
+            white-space: pre-wrap;
+            background-color: #1f2937;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            overflow: auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Autenticazione MongoDB</h1>
+        
+        <div class="login-types">
+            <button id="emailLogin" class="active">Login con Email</button>
+            <button id="usernameLogin">Login con Username</button>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group email-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="direzione@cafasso.it">
+            </div>
+            
+            <div class="form-group username-field" style="display: none;">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="direzione">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            
+            <div class="presets">
+                <h3>Credenziali di test:</h3>
+                <button type="button" id="adminPreset">Admin</button>
+                <button type="button" id="userPreset">Utente</button>
+            </div>
+            
+            <button type="submit" id="loginButton">Login</button>
+        </form>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="success" class="success" style="display: none;"></div>
+        <div id="result" style="margin-top: 1rem; display: none;">
+            <h3>Risposta API:</h3>
+            <pre id="resultContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Credenziali di test
+        const presets = {
+            admin: {
+                email: 'direzione@cafasso.it',
+                username: 'direzione',
+                password: 'Caf@sso2025!'
+            },
+            user: {
+                email: 'utente@cafasso.it',
+                username: 'utente',
+                password: 'CafassoUser2025!'
+            }
+        };
+        
+        // Elementi DOM
+        const loginForm = document.getElementById('loginForm');
+        const emailLogin = document.getElementById('emailLogin');
+        const usernameLogin = document.getElementById('usernameLogin');
+        const emailField = document.querySelector('.email-field');
+        const usernameField = document.querySelector('.username-field');
+        const emailInput = document.getElementById('email');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const adminPreset = document.getElementById('adminPreset');
+        const userPreset = document.getElementById('userPreset');
+        const errorDiv = document.getElementById('error');
+        const successDiv = document.getElementById('success');
+        const resultDiv = document.getElementById('result');
+        const resultContent = document.getElementById('resultContent');
+        const loginButton = document.getElementById('loginButton');
+        
+        // Gestione tipo di login
+        let loginType = 'email'; // Default è email
+        
+        emailLogin.addEventListener('click', () => {
+            loginType = 'email';
+            emailLogin.classList.add('active');
+            usernameLogin.classList.remove('active');
+            emailField.style.display = 'block';
+            usernameField.style.display = 'none';
+        });
+        
+        usernameLogin.addEventListener('click', () => {
+            loginType = 'username';
+            usernameLogin.classList.add('active');
+            emailLogin.classList.remove('active');
+            emailField.style.display = 'none';
+            usernameField.style.display = 'block';
+        });
+        
+        // Presets
+        adminPreset.addEventListener('click', () => {
+            emailInput.value = presets.admin.email;
+            usernameInput.value = presets.admin.username;
+            passwordInput.value = presets.admin.password;
+        });
+        
+        userPreset.addEventListener('click', () => {
+            emailInput.value = presets.user.email;
+            usernameInput.value = presets.user.username;
+            passwordInput.value = presets.user.password;
+        });
+        
+        // Form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset feedback
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            resultDiv.style.display = 'none';
+            
+            // Get form values
+            const email = emailInput.value;
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            
+            // Validate
+            if ((loginType === 'email' && !email) || 
+                (loginType === 'username' && !username) || 
+                !password) {
+                errorDiv.textContent = 'Tutti i campi sono obbligatori';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Disable button
+            loginButton.disabled = true;
+            loginButton.textContent = 'Login in corso...';
+            
+            try {
+                // Prepare request body
+                const body = loginType === 'email'
+                    ? JSON.stringify({ email, password })
+                    : JSON.stringify({ username, password });
+                
+                console.log('Richiesta:', body);
+                
+                // Send request
+                const response = await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body
+                });
+                
+                console.log('Status code:', response.status);
+                
+                // Parse response
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Errore durante il login');
+                }
+                
+                // Success!
+                successDiv.textContent = 'Login effettuato con successo!';
+                successDiv.style.display = 'block';
+                
+                // Show result
+                resultContent.textContent = JSON.stringify(data, null, 2);
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                // Error :(
+                console.error('Errore login:', error);
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            } finally {
+                // Enable button
+                loginButton.disabled = false;
+                loginButton.textContent = 'Login';
+            }
+        });
+    </script>
+</body>
+</html>

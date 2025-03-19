@@ -1,0 +1,9 @@
+{
+  "id": "scenario-1742065384668",
+  "title": "Scenario di test",
+  "description": "Descrizione scenario di test",
+  "objectives": [
+    "Obiettivo 1",
+    "Obiettivo 2"
+  ]
+}

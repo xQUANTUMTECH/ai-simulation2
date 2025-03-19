@@ -1,0 +1,32 @@
+[
+  {
+    "id": "q1",
+    "text": "Domanda di test 1 su Normativa sul lavoro?",
+    "options": [
+      "Opzione A",
+      "Opzione B",
+      "Opzione C"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": "q2",
+    "text": "Domanda di test 2 su Normativa sul lavoro?",
+    "options": [
+      "Opzione A",
+      "Opzione B",
+      "Opzione C"
+    ],
+    "correctAnswer": 0
+  },
+  {
+    "id": "q3",
+    "text": "Domanda di test 3 su Normativa sul lavoro?",
+    "options": [
+      "Opzione A",
+      "Opzione B",
+      "Opzione C"
+    ],
+    "correctAnswer": 0
+  }
+]

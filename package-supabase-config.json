@@ -1,0 +1,16 @@
+{
+  "name": "supabase-config-scripts",
+  "version": "1.0.0",
+  "description": "Script per configurare Supabase tramite API Management",
+  "private": true,
+  "scripts": {
+    "install-deps": "npm install node-fetch",
+    "configure-cors": "node cors-config.js",
+    "disable-email-confirm": "node disable-email-confirm.js",
+    "configure-auth-redirect": "node auth-redirect-config.js",
+    "configure-all": "npm run configure-cors && npm run disable-email-confirm && npm run configure-auth-redirect"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

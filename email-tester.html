@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester Email di Conferma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #1a1e2e;
+            color: white;
+        }
+        .container {
+            background-color: #2a3042;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #a855f7;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #4b5563;
+            border-radius: 0.25rem;
+            background-color: #374151;
+            color: white;
+        }
+        textarea {
+            min-height: 150px;
+            font-family: monospace;
+        }
+        button {
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        button:hover {
+            background-color: #9333ea;
+        }
+        .error {
+            color: #ef4444;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 0.25rem;
+        }
+        .success {
+            color: #10b981;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 0.25rem;
+        }
+        pre {
+            white-space: pre-wrap;
+            background-color: #1f2937;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            overflow: auto;
+            max-height: 400px;
+        }
+        .template-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #1f2937;
+            border-radius: 0.25rem;
+            border: 1px solid #4b5563;
+        }
+        .buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .nav-links a {
+            color: #a855f7;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Email di Conferma</h1>
+        <p>Questo strumento ti permette di testare l'invio di email di conferma ai tuoi utenti.</p>
+        
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="emailType">Tipo di Email</label>
+                <select id="emailType">
+                    <option value="verification">Email di Verifica Account</option>
+                    <option value="welcome">Email di Benvenuto</option>
+                    <option value="password_reset">Reset Password</option>
+                    <option value="custom">Email Personalizzata</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="recipient">Email Destinatario</label>
+                <input type="email" id="recipient" placeholder="utente@esempio.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Oggetto Email</label>
+                <input type="text" id="subject" placeholder="Conferma il tuo account" required>
+            </div>
+            
+            <div class="form-group" id="tokenGroup">
+                <label for="token">Token di Verifica (opzionale)</label>
+                <input type="text" id="token" placeholder="Lascia vuoto per generare automaticamente">
+            </div>
+            
+            <div class="form-group" id="customTemplateGroup" style="display: none;">
+                <label for="customTemplate">Template HTML Personalizzato</label>
+                <textarea id="customTemplate" placeholder="<h1>Il tuo template HTML qui</h1>"></textarea>
+            </div>
+            
+            <div class="buttons">
+                <button type="button" id="previewButton">Anteprima</button>
+                <button type="submit" id="sendButton">Invia Email</button>
+            </div>
+        </form>
+        
+        <div id="templatePreview" class="template-preview" style="display: none;">
+            <h3>Anteprima Template:</h3>
+            <div id="previewContent"></div>
+        </div>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="success" class="success" style="display: none;"></div>
+        <div id="result" style="margin-top: 1rem; display: none;">
+            <h3>Risposta Server:</h3>
+            <pre id="resultContent"></pre>
+        </div>
+        
+        <div class="nav-links">
+            <a href="test-auth-frontend.html">Login</a> |
+            <a href="test-registro-utente.html">Registrazione</a>
+        </div>
+    </div>
+
+    <script>
+        // Elementi DOM
+        const emailForm = document.getElementById('emailForm');
+        const emailTypeSelect = document.getElementById('emailType');
+        const recipientInput = document.getElementById('recipient');
+        const subjectInput = document.getElementById('subject');
+        const tokenInput = document.getElementById('token');
+        const tokenGroup = document.getElementById('tokenGroup');
+        const customTemplateGroup = document.getElementById('customTemplateGroup');
+        const customTemplateInput = document.getElementById('customTemplate');
+        const previewButton = document.getElementById('previewButton');
+        const sendButton = document.getElementById('sendButton');
+        const templatePreview = document.getElementById('templatePreview');
+        const previewContent = document.getElementById('previewContent');
+        const errorDiv = document.getElementById('error');
+        const successDiv = document.getElementById('success');
+        const resultDiv = document.getElementById('result');
+        const resultContent = document.getElementById('resultContent');
+        
+        // Template predefiniti
+        const templates = {
+            verification: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2 style="color: #a855f7;">Cafasso Academy</h2>
+  <p>Grazie per esserti registrato a Cafasso Academy!</p>
+  <p>Per confermare il tuo account, clicca sul link qui sotto:</p>
+  <p>
+    <a 
+      href="{{verificationUrl}}" 
+      style="display: inline-block; background-color: #a855f7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
+    >
+      Conferma Email
+    </a>
+  </p>
+  <p>Oppure copia e incolla questo URL nel tuo browser:</p>
+  <p style="word-break: break-all;">{{verificationUrl}}</p>
+  <p>Questo link scadrà tra 24 ore.</p>
+  <p>Se non hai richiesto questo account, ignora questa email.</p>
+</div>
+            `,
+            welcome: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2 style="color: #a855f7;">Benvenuto su Cafasso Academy!</h2>
+  <p>Ciao {{name}},</p>
+  <p>Grazie per esserti registrato su Cafasso Academy. Siamo felici di averti con noi!</p>
+  <p>La tua registrazione è stata completata con successo e ora puoi accedere a tutti i nostri corsi e risorse.</p>
+  <p>
+    <a 
+      href="http://localhost:3000" 
+      style="display: inline-block; background-color: #a855f7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
+    >
+      Accedi alla Piattaforma
+    </a>
+  </p>
+  <p>Per qualsiasi domanda o supporto, non esitare a contattarci.</p>
+  <p>Cordiali saluti,<br>Il team di Cafasso Academy</p>
+</div>
+            `,
+            password_reset: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+  <h2 style="color: #a855f7;">Reset della Password</h2>
+  <p>Hai richiesto il reset della password per il tuo account Cafasso Academy.</p>
+  <p>Clicca sul link qui sotto per impostare una nuova password:</p>
+  <p>
+    <a 
+      href="{{resetUrl}}" 
+      style="display: inline-block; background-color: #a855f7; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;"
+    >
+      Reset Password
+    </a>
+  </p>
+  <p>Oppure copia e incolla questo URL nel tuo browser:</p>
+  <p style="word-break: break-all;">{{resetUrl}}</p>
+  <p>Questo link scadrà tra 1 ora.</p>
+  <p>Se non hai richiesto questo reset, ignora questa email o contatta l'assistenza.</p>
+</div>
+            `,
+            custom: ''
+        };
+        
+        // Quando cambia il tipo di email
+        emailTypeSelect.addEventListener('change', () => {
+            const selectedType = emailTypeSelect.value;
+            
+            // Aggiorna oggetto email in base al tipo
+            if (selectedType === 'verification') {
+                subjectInput.value = 'Conferma il tuo account Cafasso Academy';
+                tokenGroup.style.display = 'block';
+            } else if (selectedType === 'welcome') {
+                subjectInput.value = 'Benvenuto su Cafasso Academy';
+                tokenGroup.style.display = 'none';
+            } else if (selectedType === 'password_reset') {
+                subjectInput.value = 'Reset della password - Cafasso Academy';
+                tokenGroup.style.display = 'block';
+            }
+            
+            // Mostra/nascondi template personalizzato
+            customTemplateGroup.style.display = selectedType === 'custom' ? 'block' : 'none';
+            
+            // Aggiorna template personalizzato
+            if (selectedType === 'custom') {
+                customTemplateInput.value = templates.custom || templates.verification;
+            }
+        });
+        
+        // Anteprima template
+        previewButton.addEventListener('click', () => {
+            const selectedType = emailTypeSelect.value;
+            let template = '';
+            
+            if (selectedType === 'custom') {
+                template = customTemplateInput.value;
+            } else {
+                template = templates[selectedType];
+            }
+            
+            // Sostituisci i placeholder
+            let previewHtml = template
+                .replace(/{{name}}/g, 'Utente di Esempio')
+                .replace(/{{verificationUrl}}/g, `http://localhost:3000/api/auth/verify-email?token=${tokenInput.value || 'example-token'}`)
+                .replace(/{{resetUrl}}/g, `http://localhost:3000/api/auth/reset-password?token=${tokenInput.value || 'example-token'}`);
+            
+            // Mostra anteprima
+            previewContent.innerHTML = previewHtml;
+            templatePreview.style.display = 'block';
+        });
+        
+        // Invio email
+        emailForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset feedback
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            resultDiv.style.display = 'none';
+            
+            // Get form values
+            const emailType = emailTypeSelect.value;
+            const recipient = recipientInput.value;
+            const subject = subjectInput.value;
+            const token = tokenInput.value;
+            const customTemplate = customTemplateInput.value;
+            
+            // Validate
+            if (!recipient || !subject) {
+                errorDiv.textContent = 'Destinatario e oggetto sono obbligatori';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(recipient)) {
+                errorDiv.textContent = 'Email non valida';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Disable button
+            sendButton.disabled = true;
+            sendButton.textContent = 'Invio in corso...';
+            
+            try {
+                // Prepare request body
+                const body = JSON.stringify({
+                    type: emailType,
+                    recipient,
+                    subject,
+                    token: token || undefined,
+                    template: emailType === 'custom' ? customTemplate : undefined
+                });
+                
+                console.log('Richiesta invio email:', body);
+                
+                // Send request
+                const response = await fetch('http://localhost:3000/api/email/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body
+                });
+                
+                console.log('Status code:', response.status);
+                
+                // Parse response
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Errore durante l\'invio dell\'email');
+                }
+                
+                // Success!
+                successDiv.textContent = 'Email inviata con successo!';
+                successDiv.style.display = 'block';
+                
+                // Show result
+                resultContent.textContent = JSON.stringify(data, null, 2);
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                // Error :(
+                console.error('Errore invio email:', error);
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            } finally {
+                // Enable button
+                sendButton.disabled = false;
+                sendButton.textContent = 'Invia Email';
+            }
+        });
+        
+        // Imposta email tipo predefinito all'avvio
+        emailTypeSelect.dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>

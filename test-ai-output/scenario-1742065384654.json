@@ -1,0 +1,18 @@
+{
+  "title": "Scenario di consulenza sul lavoro",
+  "description": "Simulazione di consulenza su contratti a termine",
+  "objectives": [
+    "Spiegare normative",
+    "Rispondere a domande"
+  ],
+  "roles": [
+    {
+      "title": "Consulente",
+      "description": "Esperto di diritto del lavoro"
+    },
+    {
+      "title": "Cliente",
+      "description": "Responsabile HR di un'azienda"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "timestamp": "2025-03-15T20:10:55.680Z",
+  "url": "https://twusehwykpemphqtxlrx.supabase.co",
+  "results": [
+    {
+      "name": "Connessione database con token anonimo",
+      "status": "PASS",
+      "data": "Connessione riuscita"
+    },
+    {
+      "name": "Connessione database con service role",
+      "status": "PASS",
+      "data": "Connessione riuscita"
+    },
+    {
+      "name": "Verifica presenza schemi",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.schemata\" does not exist"
+    },
+    {
+      "name": "Verifica tabella users",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella documents",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella courses",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella course_modules",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella course_enrollments",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella quiz_questions",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica tabella quiz_responses",
+      "status": "FAIL",
+      "error": "relation \"public.information_schema.tables\" does not exist"
+    },
+    {
+      "name": "Verifica policy Row Level Security",
+      "status": "FAIL",
+      "error": "relation \"public.pg_catalog.pg_policies\" does not exist"
+    },
+    {
+      "name": "Verifica bucket storage",
+      "status": "PASS",
+      "data": "2 bucket trovati: videos, documents"
+    },
+    {
+      "name": "Test importazione dati",
+      "status": "FAIL",
+      "error": "Could not find the function public.pgclient_execute(sql) in the schema cache"
+    },
+    {
+      "name": "Verifica impostazioni RLS sulle tabelle",
+      "status": "FAIL",
+      "error": "Could not find the function public.pgclient_execute(sql) in the schema cache"
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "passed": 3,
+    "failed": 11
+  }
+}

@@ -1,0 +1,118 @@
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 INIZIO TEST PATTERN REPOSITORY CON DATI REALI[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:49] ℹ️ INFO: Connessione al database...[0m
+[2025-03-17T13:57:49.930Z] [DB] [INFO] Tentativo di connessione a MongoDB...
+(node:30196) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30196) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[2025-03-17T13:57:49.953Z] [DB] [INFO] MongoDB connesso con successo
+[32m[13:57:49] ✅ SUCCESSO: Connessione al database MongoDB stabilita[0m
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 Test Repository Utenti[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:49] ℹ️ INFO: Pulizia collezione utenti...[0m
+[36m[13:57:49] 🧪 TEST: Inserimento batch utenti...[0m
+[34m[13:57:49] ℹ️ INFO: Inserito utente Mario Rossi con ID: 67d82a5ddbd75f4afdf184cc[0m
+[2025-03-17T13:57:49.967Z] [DB] [WARN] Tentativo 1/5 fallito per insertOne in users
+[2025-03-17T13:57:50.124Z] [DB] [WARN] Tentativo 2/5 fallito per insertOne in users
+[2025-03-17T13:57:50.265Z] [DB] [WARN] Tentativo 3/5 fallito per insertOne in users
+[2025-03-17T13:57:50.597Z] [DB] [WARN] Tentativo 4/5 fallito per insertOne in users
+[2025-03-17T13:57:51.403Z] [DB] [WARN] Tentativo 5/5 fallito per insertOne in users
+[2025-03-17T13:57:51.404Z] [DB] [ERROR] Tutti i tentativi falliti per insertOne in users
+[2025-03-17T13:57:51.405Z] [DB] [ERROR] Errore in insertOne per users
+[31m[13:57:51] ❌ ERRORE: Test repository utenti fallito: Documento con chiave duplicata: {"username":null}[0m
+Error: Documento con chiave duplicata: {"username":null}
+    at Object.insertOne (file:///C:/Users/Utente/Desktop/dev/cafasso/cafasso%20ai%20academy/AI%20ACADEMY%20CAFASSO%20COMPLETE/project/server/database/mongodb.js:488:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testRepositoryUtenti (file:///C:/Users/Utente/Desktop/dev/cafasso/cafasso%20ai%20academy/AI%20ACADEMY%20CAFASSO%20COMPLETE/project/test-repository-dati-reali.js:249:22)
+    at async runAllTests (file:///C:/Users/Utente/Desktop/dev/cafasso/cafasso%20ai%20academy/AI%20ACADEMY%20CAFASSO%20COMPLETE/project/test-repository-dati-reali.js:656:5)
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 Test Repository Corsi[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:51] ℹ️ INFO: Pulizia collezione corsi...[0m
+[36m[13:57:51] 🧪 TEST: Inserimento corsi...[0m
+[34m[13:57:51] ℹ️ INFO: Inserito corso "Introduzione all'Intelligenza Artificiale" con ID: 67d82a5fdbd75f4afdf184ce[0m
+[34m[13:57:51] ℹ️ INFO: Inserito corso "Analisi Dati con Python" con ID: 67d82a5fdbd75f4afdf184cf[0m
+[36m[13:57:51] 🧪 TEST: Ricerca corsi per tag...[0m
+[32m[13:57:51] ✅ SUCCESSO: Trovato 1 corso con tag "python": Analisi Dati con Python[0m
+[36m[13:57:51] 🧪 TEST: Ricerca corsi per livello...[0m
+[32m[13:57:51] ✅ SUCCESSO: Trovato 1 corso di livello BASE: Introduzione all'Intelligenza Artificiale[0m
+[36m[13:57:51] 🧪 TEST: Aggregazione per calcolare durata totale corsi...[0m
+[32m[13:57:51] ✅ SUCCESSO: Durata totale dei corsi: 360 minuti[0m
+[32m[13:57:51] ✅ SUCCESSO: Il totale calcolato (360) corrisponde al valore atteso (360)[0m
+[36m[13:57:51] 🧪 TEST: Query complessa: corsi con almeno 3 moduli...[0m
+[32m[13:57:51] ✅ SUCCESSO: Trovato 1 corso con 4+ moduli: Analisi Dati con Python (4 moduli)[0m
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 Test Transazioni MongoDB[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:51] ℹ️ INFO: Pulizia collezioni...[0m
+[36m[13:57:51] 🧪 TEST: Test transazione riuscita...[0m
+[2025-03-17T13:57:51.423Z] [DB] [DEBUG] Avvio transazione MongoDB
+[2025-03-17T13:57:51.425Z] [DB] [WARN] Tentativo 1/5 fallito per insertOne in scenarios
+[2025-03-17T13:57:51.480Z] [DB] [WARN] Tentativo 2/5 fallito per insertOne in scenarios
+[2025-03-17T13:57:51.605Z] [DB] [WARN] Tentativo 3/5 fallito per insertOne in scenarios
+[2025-03-17T13:57:51.861Z] [DB] [WARN] Tentativo 4/5 fallito per insertOne in scenarios
+[2025-03-17T13:57:52.462Z] [DB] [WARN] Tentativo 5/5 fallito per insertOne in scenarios
+[2025-03-17T13:57:52.462Z] [DB] [ERROR] Tutti i tentativi falliti per insertOne in scenarios
+[2025-03-17T13:57:52.463Z] [DB] [ERROR] Errore in insertOne per scenarios
+[2025-03-17T13:57:52.465Z] [DB] [ERROR] Errore durante la transazione MongoDB
+[31m[13:57:52] ❌ ERRORE: Test transazioni fallito: Transaction numbers are only allowed on a replica set member or mongos[0m
+MongoServerError: Transaction numbers are only allowed on a replica set member or mongos
+    at Connection.sendCommand (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\cmap\connection.js:299:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Connection.command (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\cmap\connection.js:327:26)
+    at async Server.command (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\sdam\server.js:168:29)
+    at async InsertOneOperation.executeCommand (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\operations\command.js:76:16)
+    at async InsertOneOperation.execute (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\operations\insert.js:37:16)
+    at async InsertOneOperation.execute (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\operations\insert.js:46:21)
+    at async tryOperation (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\operations\execute_operation.js:207:20)
+    at async executeOperation (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\operations\execute_operation.js:75:16)
+    at async Collection.insertOne (C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\node_modules\mongodb\lib\collection.js:157:16)
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 Test Meccanismo Retry[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[36m[13:57:52] 🧪 TEST: Test withRetry con errori temporanei...[0m
+[34m[13:57:52] ℹ️ INFO: Tentativo 1/5...[0m
+[2025-03-17T13:57:52.466Z] [DB] [WARN] Tentativo 1/5 fallito per test-retry-operazione
+[34m[13:57:52] ℹ️ INFO: Tentativo 2/5...[0m
+[2025-03-17T13:57:52.583Z] [DB] [WARN] Tentativo 2/5 fallito per test-retry-operazione
+[34m[13:57:52] ℹ️ INFO: Tentativo 3/5...[0m
+[32m[13:57:52] ✅ SUCCESSO: withRetry ha funzionato correttamente: successo al tentativo 3[0m
+[32m[13:57:52] ✅ SUCCESSO: Risultato: Operazione completata con successo al tentativo 3[0m
+[36m[13:57:52] 🧪 TEST: Test withRetry che fallisce dopo tutti i tentativi...[0m
+[34m[13:57:52] ℹ️ INFO: Tentativo 1/3...[0m
+[2025-03-17T13:57:52.814Z] [DB] [WARN] Tentativo 1/3 fallito per test-retry-fallimento
+[34m[13:57:52] ℹ️ INFO: Tentativo 2/3...[0m
+[2025-03-17T13:57:52.862Z] [DB] [WARN] Tentativo 2/3 fallito per test-retry-fallimento
+[34m[13:57:52] ℹ️ INFO: Tentativo 3/3...[0m
+[2025-03-17T13:57:52.954Z] [DB] [WARN] Tentativo 3/3 fallito per test-retry-fallimento
+[2025-03-17T13:57:52.958Z] [DB] [ERROR] Tutti i tentativi falliti per test-retry-fallimento
+[32m[13:57:52] ✅ SUCCESSO: withRetry ha correttamente fallito dopo 3 tentativi[0m
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 Test Performance Repository[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:52] ℹ️ INFO: Pulizia collezione test...[0m
+[36m[13:57:52] 🧪 TEST: Inserimento batch di 100 documenti...[0m
+[32m[13:57:53] ✅ SUCCESSO: Inserimento completato in 138ms (1.38ms per documento)[0m
+[36m[13:57:53] 🧪 TEST: Test lettura con filtro...[0m
+[32m[13:57:53] ✅ SUCCESSO: Lettura di 34 documenti completata in 2ms[0m
+[36m[13:57:53] 🧪 TEST: Test aggregazione...[0m
+[32m[13:57:53] ✅ SUCCESSO: Aggregazione completata in 2ms[0m
+[34m[13:57:53] ℹ️ INFO: Risultati aggregazione: [{"_id":"true","count":34,"avgValue":437.44174341795457},{"_id":false,"count":66,"avgValue":482.0735898569068}][0m
+[36m[13:57:53] 🧪 TEST: Eliminazione batch di documenti...[0m
+[32m[13:57:53] ✅ SUCCESSO: Eliminazione di 100 documenti completata in 2ms[0m
+
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[35m 🔬 TUTTI I TEST COMPLETATI[0m
+[35m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[34m[13:57:53] ℹ️ INFO: Chiusura connessione database...[0m
+[2025-03-17T13:57:53.118Z] [DB] [INFO] Connessione MongoDB chiusa
+[32m[13:57:53] ✅ SUCCESSO: Connessione database chiusa[0m
+[34m[13:57:53] ℹ️ INFO: Esecuzione test completata[0m

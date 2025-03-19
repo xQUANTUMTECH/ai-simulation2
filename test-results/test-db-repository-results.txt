@@ -1,0 +1,52 @@
+[34mℹ️ INFO: Avvio test del pattern repository MongoDB...[0m
+[35m🧪 TEST: Connessione al database...[0m
+[2025-03-17T13:57:47.424Z] [DB] [INFO] Tentativo di connessione a MongoDB...
+(node:19260) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19260) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[2025-03-17T13:57:47.448Z] [DB] [INFO] MongoDB connesso con successo
+[32m✅ SUCCESSO: Connessione al database stabilita con successo[0m
+[35m🧪 TEST: Creazione repository per la collezione "test_repository_pattern"...[0m
+[32m✅ SUCCESSO: Repository creato con successo[0m
+[35m🧪 TEST: Pulizia collezione di test...[0m
+[32m✅ SUCCESSO: Collezione di test pulita con successo[0m
+[35m🧪 TEST: Test insertOne...[0m
+[34mℹ️ INFO: Documento inserito con ID: 67d82a5bba399885e820e29f[0m
+[34mℹ️ INFO: Documento inserito con ID: 67d82a5bba399885e820e2a0[0m
+[34mℹ️ INFO: Documento inserito con ID: 67d82a5bba399885e820e2a1[0m
+[32m✅ SUCCESSO: Inseriti 3 documenti di test[0m
+[35m🧪 TEST: Test findById...[0m
+[32m✅ SUCCESSO: Documento trovato correttamente: Documento di test 1[0m
+[35m🧪 TEST: Test find con filtro...[0m
+[32m✅ SUCCESSO: Trovati 2 documenti con valore > 150[0m
+[35m🧪 TEST: Test count...[0m
+[32m✅ SUCCESSO: Count corretto: 3 documenti con tag 'test'[0m
+[35m🧪 TEST: Test updateById...[0m
+[32m✅ SUCCESSO: Documento aggiornato correttamente[0m
+[35m🧪 TEST: Test withRetry con operazione che fallisce temporaneamente...[0m
+[2025-03-17T13:57:47.472Z] [DB] [WARN] Tentativo 1/3 fallito per database operation
+[2025-03-17T13:57:47.542Z] [DB] [WARN] Tentativo 2/3 fallito per database operation
+[32m✅ SUCCESSO: withRetry ha completato l'operazione con successo dopo 3 tentativi[0m
+[35m🧪 TEST: Test aggregate...[0m
+[32m✅ SUCCESSO: Aggregazione completata con successo, valore totale: 1499[0m
+[35m🧪 TEST: Test deleteById...[0m
+[32m✅ SUCCESSO: Documento eliminato correttamente[0m
+[35m🧪 TEST: Test withTransaction...[0m
+[2025-03-17T13:57:47.654Z] [DB] [DEBUG] Avvio transazione MongoDB
+[2025-03-17T13:57:47.660Z] [DB] [WARN] Tentativo 1/5 fallito per insertOne in test_repository_pattern
+[2025-03-17T13:57:47.736Z] [DB] [WARN] Tentativo 2/5 fallito per insertOne in test_repository_pattern
+[2025-03-17T13:57:47.934Z] [DB] [WARN] Tentativo 3/5 fallito per insertOne in test_repository_pattern
+[2025-03-17T13:57:48.485Z] [DB] [WARN] Tentativo 4/5 fallito per insertOne in test_repository_pattern
+[2025-03-17T13:57:49.691Z] [DB] [WARN] Tentativo 5/5 fallito per insertOne in test_repository_pattern
+[2025-03-17T13:57:49.692Z] [DB] [ERROR] Tutti i tentativi falliti per insertOne in test_repository_pattern
+[2025-03-17T13:57:49.693Z] [DB] [ERROR] Errore in insertOne per test_repository_pattern
+[2025-03-17T13:57:49.696Z] [DB] [ERROR] Errore durante la transazione MongoDB
+[33m⚠️ ATTENZIONE: Test transazione non completato: Transaction numbers are only allowed on a replica set member or mongos[0m
+[34mℹ️ INFO: Questo potrebbe essere normale se non stai usando un replica set o se la versione MongoDB non supporta transazioni[0m
+[35m🧪 TEST: Pulizia finale collezione di test...[0m
+[32m✅ SUCCESSO: Collezione di test pulita con successo[0m
+[32m✅ SUCCESSO: TUTTI I TEST COMPLETATI CON SUCCESSO[0m
+[34mℹ️ INFO: Chiusura connessione database...[0m
+[2025-03-17T13:57:49.701Z] [DB] [INFO] Connessione MongoDB chiusa
+[32m✅ SUCCESSO: Connessione database chiusa con successo[0m
+[34mℹ️ INFO: Test del pattern repository MongoDB completati[0m

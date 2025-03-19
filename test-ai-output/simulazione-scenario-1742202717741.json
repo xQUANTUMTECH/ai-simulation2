@@ -1,0 +1,28 @@
+{
+  "title": "Consulenza su contratto a tempo determinato nel settore commerciale",
+  "description": "Simulazione di una consulenza tra un consulente del lavoro e un responsabile HR di un'azienda commerciale che deve assumere alcuni venditori stagionali.",
+  "roles": [
+    {
+      "name": "Consulente del Lavoro",
+      "description": "Esperto in normative sul lavoro, con 10 anni di esperienza nel settore commerciale."
+    },
+    {
+      "name": "Responsabile HR",
+      "description": "Direttore delle risorse umane di una catena di negozi di abbigliamento, deve gestire l'assunzione di 5 venditori per il periodo natalizio."
+    }
+  ],
+  "avatars": [
+    "professional-woman-1",
+    "business-man-2"
+  ],
+  "dialogues": [
+    {
+      "speaker": "Responsabile HR",
+      "text": "Buongiorno, ho bisogno di una consulenza per l'assunzione di 5 venditori stagionali per il periodo natalizio. Vorrei utilizzare contratti a tempo determinato."
+    },
+    {
+      "speaker": "Consulente del Lavoro",
+      "text": "Buongiorno. Certamente. Per i contratti a tempo determinato nel settore commerciale dobbiamo considerare alcune specificità. Innanzitutto, qual è la durata prevista per questi contratti?"
+    }
+  ]
+}

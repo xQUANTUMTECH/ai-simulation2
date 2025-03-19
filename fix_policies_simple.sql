@@ -1,0 +1,81 @@
+-- Fix semplificato per il problema di ricorsione infinita nelle policy RLS
+-- Questo script rimuove direttamente le policy problematiche e le ricrea in modo non ricorsivo
+
+-- Rimuovi tutte le policy problematiche sulla tabella users
+DROP POLICY IF EXISTS "Users can select their own data" ON public.users;
+DROP POLICY IF EXISTS "Administrators can view all user data" ON public.users;
+DROP POLICY IF EXISTS "Users can update their own data" ON public.users;
+DROP POLICY IF EXISTS "Administrators can update user data" ON public.users;
+DROP POLICY IF EXISTS "Administrators can create users" ON public.users;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.users;
+DROP POLICY IF EXISTS "Admins can read all" ON public.users;
+
+-- Crea nuove policy non ricorsive per la tabella users
+-- Policy 1: Gli utenti possono vedere solo il proprio profilo
+CREATE POLICY "Users can view own profile" ON public.users
+    FOR SELECT USING (auth.uid() = id);
+
+-- Policy 2: Gli amministratori possono vedere tutti i profili
+CREATE POLICY "Admins can view all profiles" ON public.users
+    FOR SELECT 
+    USING (
+        EXISTS (
+            SELECT 1 FROM auth.users
+            WHERE auth.users.id = auth.uid() 
+            AND auth.users.raw_user_meta_data->>'role' = 'ADMIN'
+        )
+    );
+
+-- Policy 3: Gli utenti possono aggiornare solo il proprio profilo
+CREATE POLICY "Users can update own profile" ON public.users
+    FOR UPDATE 
+    USING (auth.uid() = id);
+
+-- Policy 4: Gli amministratori possono aggiornare tutti i profili
+CREATE POLICY "Admins can update all profiles" ON public.users
+    FOR UPDATE 
+    USING (
+        EXISTS (
+            SELECT 1 FROM auth.users
+            WHERE auth.users.id = auth.uid() 
+            AND auth.users.raw_user_meta_data->>'role' = 'ADMIN'
+        )
+    );
+
+-- Policy 5: Solo gli amministratori possono inserire nuovi utenti oppure un utente può creare il proprio profilo
+CREATE POLICY "Admins can insert users" ON public.users
+    FOR INSERT 
+    WITH CHECK (
+        EXISTS (
+            SELECT 1 FROM auth.users
+            WHERE auth.users.id = auth.uid() 
+            AND auth.users.raw_user_meta_data->>'role' = 'ADMIN'
+        )
+        OR 
+        -- Durante la registrazione, un utente può creare il proprio profilo
+        auth.uid() = id
+    );
+
+-- Policy per auth_sessions senza riferimenti circolari
+DROP POLICY IF EXISTS "Users can only view their own sessions" ON public.auth_sessions;
+DROP POLICY IF EXISTS "Users can only insert their own sessions" ON public.auth_sessions;
+DROP POLICY IF EXISTS "Users can only update their own sessions" ON public.auth_sessions;
+DROP POLICY IF EXISTS "Users can only delete their own sessions" ON public.auth_sessions;
+
+CREATE POLICY "Users session select" ON public.auth_sessions
+    FOR SELECT USING (auth.uid() = user_id);
+    
+CREATE POLICY "Users session insert" ON public.auth_sessions
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+    
+CREATE POLICY "Users session update" ON public.auth_sessions
+    FOR UPDATE USING (auth.uid() = user_id);
+    
+CREATE POLICY "Users session delete" ON public.auth_sessions
+    FOR DELETE USING (auth.uid() = user_id);
+
+-- Assicurati che RLS sia abilitato per tutte le tabelle public
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.auth_sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.failed_login_attempts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_settings ENABLE ROW LEVEL SECURITY;

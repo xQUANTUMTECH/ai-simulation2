@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Registrazione Utente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #1a1e2e;
+            color: white;
+        }
+        .container {
+            background-color: #2a3042;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #a855f7;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #4b5563;
+            border-radius: 0.25rem;
+            background-color: #374151;
+            color: white;
+        }
+        button {
+            background-color: #a855f7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #9333ea;
+        }
+        .error {
+            color: #ef4444;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 0.25rem;
+        }
+        .success {
+            color: #10b981;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 0.25rem;
+        }
+        pre {
+            white-space: pre-wrap;
+            background-color: #1f2937;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            overflow: auto;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Registrazione Utente</h1>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="fullName">Nome completo</label>
+                <input type="text" id="fullName" placeholder="Mario Rossi" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="mario.rossi@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="mario_rossi" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Conferma password</label>
+                <input type="password" id="confirmPassword" placeholder="Conferma password" required>
+            </div>
+            
+            <button type="submit" id="registerButton">Registrati</button>
+        </form>
+        
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="success" class="success" style="display: none;"></div>
+        <div id="result" style="margin-top: 1rem; display: none;">
+            <h3>Dettagli Registrazione:</h3>
+            <pre id="resultContent"></pre>
+        </div>
+        
+        <div style="margin-top: 1.5rem; display: flex; justify-content: center;">
+            <a href="test-auth-frontend.html" style="color: #a855f7;">Vai al login</a>
+        </div>
+    </div>
+
+    <script>
+        // Elementi DOM
+        const registerForm = document.getElementById('registerForm');
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const registerButton = document.getElementById('registerButton');
+        const errorDiv = document.getElementById('error');
+        const successDiv = document.getElementById('success');
+        const resultDiv = document.getElementById('result');
+        const resultContent = document.getElementById('resultContent');
+        
+        // Form submission
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset feedback
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            resultDiv.style.display = 'none';
+            
+            // Get form values
+            const fullName = fullNameInput.value;
+            const email = emailInput.value;
+            const username = usernameInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            // Validate
+            if (!fullName || !email || !username || !password || !confirmPassword) {
+                errorDiv.textContent = 'Tutti i campi sono obbligatori';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorDiv.textContent = 'Email non valida';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Validate username (alphanumeric, no spaces)
+            const usernameRegex = /^[a-zA-Z0-9_]+$/;
+            if (!usernameRegex.test(username)) {
+                errorDiv.textContent = 'Username non valido (solo lettere, numeri e underscore)';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Check passwords match
+            if (password !== confirmPassword) {
+                errorDiv.textContent = 'Le password non corrispondono';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Password strength (at least 8 chars, 1 uppercase, 1 number)
+            if (password.length < 8) {
+                errorDiv.textContent = 'La password deve essere lunga almeno 8 caratteri';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            
+            if (!hasUppercase || !hasNumber) {
+                errorDiv.textContent = 'La password deve contenere almeno una lettera maiuscola e un numero';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            // Disable button
+            registerButton.disabled = true;
+            registerButton.textContent = 'Registrazione in corso...';
+            
+            try {
+                // Prepare request body
+                const body = JSON.stringify({
+                    fullName,
+                    email,
+                    username,
+                    password
+                });
+                
+                console.log('Richiesta di registrazione:', body);
+                
+                // Send request
+                const response = await fetch('http://localhost:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body
+                });
+                
+                console.log('Status code:', response.status);
+                
+                // Parse response
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Errore durante la registrazione');
+                }
+                
+                // Success!
+                successDiv.textContent = data.message || 'Registrazione completata! Controlla la tua email per confermare l\'account.';
+                successDiv.style.display = 'block';
+                
+                // Show result
+                resultContent.textContent = JSON.stringify(data, null, 2);
+                resultDiv.style.display = 'block';
+                
+                // Clear form
+                registerForm.reset();
+                
+            } catch (error) {
+                // Error :(
+                console.error('Errore registrazione:', error);
+                errorDiv.textContent = error.message;
+                errorDiv.style.display = 'block';
+            } finally {
+                // Enable button
+                registerButton.disabled = false;
+                registerButton.textContent = 'Registrati';
+            }
+        });
+    </script>
+</body>
+</html>

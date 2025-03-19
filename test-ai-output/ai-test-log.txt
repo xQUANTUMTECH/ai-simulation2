@@ -1,0 +1,88 @@
+[2025-03-16T18:55:06.854Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-16T18:55:06.859Z] [INFO] Data e ora inizio: Sun Mar 16 2025 19:55:06 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-16T18:55:06.860Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-16T18:55:06.861Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742151306860.txt
+[2025-03-16T18:55:06.861Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-16T18:55:06.862Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-16T18:55:06.863Z] [INFO] File testuale salvato: simulazione-scenario-1742151306863.json
+[2025-03-16T18:55:06.865Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-16T18:55:06.865Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-16T18:55:06.866Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-16T18:55:06.867Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-16T19:22:19.783Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-16T19:22:19.788Z] [INFO] Data e ora inizio: Sun Mar 16 2025 20:22:19 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-16T19:22:19.788Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-16T19:22:19.790Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742152939789.txt
+[2025-03-16T19:22:19.791Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-16T19:22:19.791Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-16T19:22:19.792Z] [INFO] File testuale salvato: simulazione-scenario-1742152939792.json
+[2025-03-16T19:22:19.793Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-16T19:22:19.793Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-16T19:22:19.793Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-16T19:22:19.794Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-16T19:25:24.746Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-16T19:25:24.750Z] [INFO] Data e ora inizio: Sun Mar 16 2025 20:25:24 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-16T19:25:24.751Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-16T19:25:24.751Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742153124751.txt
+[2025-03-16T19:25:24.752Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-16T19:25:24.752Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-16T19:25:24.753Z] [INFO] File testuale salvato: simulazione-scenario-1742153124753.json
+[2025-03-16T19:25:24.754Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-16T19:25:24.754Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-16T19:25:24.755Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-16T19:25:24.755Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-17T09:11:57.732Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:11:57.738Z] [INFO] Data e ora inizio: Mon Mar 17 2025 10:11:57 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-17T09:11:57.738Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-17T09:11:57.739Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742202717739.txt
+[2025-03-17T09:11:57.740Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-17T09:11:57.741Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-17T09:11:57.742Z] [INFO] File testuale salvato: simulazione-scenario-1742202717741.json
+[2025-03-17T09:11:57.743Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-17T09:11:57.743Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:11:57.744Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-17T09:11:57.744Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-17T09:12:20.644Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.648Z] [INFO] Data e ora inizio: Mon Mar 17 2025 10:12:20 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-17T09:12:20.649Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-17T09:12:20.650Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742202740649.txt
+[2025-03-17T09:12:20.651Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-17T09:12:20.651Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-17T09:12:20.652Z] [INFO] File testuale salvato: simulazione-scenario-1742202740652.json
+[2025-03-17T09:12:20.653Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-17T09:12:20.653Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.654Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-17T09:12:20.654Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-17T09:12:20.708Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.713Z] [INFO] Data e ora inizio: Mon Mar 17 2025 10:12:20 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-17T09:12:20.713Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-17T09:12:20.715Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742202740714.txt
+[2025-03-17T09:12:20.716Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-17T09:12:20.717Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-17T09:12:20.719Z] [INFO] File testuale salvato: simulazione-scenario-1742202740718.json
+[2025-03-17T09:12:20.720Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-17T09:12:20.721Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.721Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-17T09:12:20.722Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-17T09:12:20.774Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.777Z] [INFO] Data e ora inizio: Mon Mar 17 2025 10:12:20 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-17T09:12:20.778Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-17T09:12:20.779Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742202740779.txt
+[2025-03-17T09:12:20.780Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-17T09:12:20.781Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-17T09:12:20.782Z] [INFO] File testuale salvato: simulazione-scenario-1742202740781.json
+[2025-03-17T09:12:20.783Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-17T09:12:20.784Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.785Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-17T09:12:20.787Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output
+[2025-03-17T09:12:20.839Z] [START] === INIZIO TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.842Z] [INFO] Data e ora inizio: Mon Mar 17 2025 10:12:20 GMT+0100 (Ora standard dell’Europa centrale)
+[2025-03-17T09:12:20.844Z] [TEST] Iniziando test simulato di generazione testo
+[2025-03-17T09:12:20.845Z] [INFO] File testuale salvato: simulazione-generazione-testo-1742202740844.txt
+[2025-03-17T09:12:20.846Z] [SUCCESS] Test di generazione testo simulato completato
+[2025-03-17T09:12:20.846Z] [TEST] Iniziando test simulato di generazione scenario
+[2025-03-17T09:12:20.847Z] [INFO] File testuale salvato: simulazione-scenario-1742202740847.json
+[2025-03-17T09:12:20.848Z] [SUCCESS] Test di generazione scenario simulato completato
+[2025-03-17T09:12:20.849Z] [END] === FINE TEST SERVIZI AI SIMULATI ===
+[2025-03-17T09:12:20.850Z] [INFO] Tutti i test simulati sono stati completati con successo.
+[2025-03-17T09:12:20.850Z] [INFO] I risultati sono disponibili nella cartella: C:\Users\Utente\Desktop\dev\cafasso\cafasso ai academy\AI ACADEMY CAFASSO COMPLETE\project\test-ai-output

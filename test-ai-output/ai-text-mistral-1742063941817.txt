@@ -1,0 +1,1 @@
+Risposta simulata da aiService.generateResponse con prompt: Fornisci una breve spiegazione delle recenti normative sul lavoro in Italia in 3 punti principali.

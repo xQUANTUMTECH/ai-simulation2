@@ -1,0 +1,45 @@
+# Configurazione Netlify per Cafasso AI Academy
+
+# Impostazioni di build
+[build]
+  # Directory contenente i file finali di build
+  publish = "dist"
+  
+  # Comando per eseguire la build del progetto
+  command = "npm run build"
+  
+  # Directory di base del progetto (facoltativo)
+  base = ""
+
+# Reindirizzamenti e configurazione del router
+[[redirects]]
+  # Reindirizza tutte le richieste non trovate a index.html 
+  # per supportare il routing lato client (React Router)
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Variabili d'ambiente di produzione
+# Queste variabili saranno disponibili durante il processo di build
+[build.environment]
+  # Imposta Node.js a una versione stabile
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# Ottimizzazione dei bundle
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true

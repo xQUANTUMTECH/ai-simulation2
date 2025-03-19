@@ -1,0 +1,24 @@
+{
+  "title": "Scenario di test generato",
+  "description": "Questo è uno scenario generato per test",
+  "objectives": [
+    "Testare la funzionalità",
+    "Verificare il sistema"
+  ],
+  "roles": [
+    {
+      "title": "Ruolo 1",
+      "description": "Descrizione ruolo 1"
+    },
+    {
+      "title": "Ruolo 2",
+      "description": "Descrizione ruolo 2"
+    }
+  ],
+  "avatars": [
+    {
+      "name": "Avatar 1",
+      "role": "Ruolo 1"
+    }
+  ]
+}

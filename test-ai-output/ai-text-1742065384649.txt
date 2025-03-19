@@ -1,0 +1,1 @@
+Risposta simulata per prompt "Fornisci una breve spiegazione..." usando modello mistral
