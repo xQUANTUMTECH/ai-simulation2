@@ -1,58 +1,36 @@
 # TASK IN CORSO E TRACKING PROBLEMI
 
-## Task: Correzione problemi i18n-service con JSX e risoluzione errori sistema
-- **Stato**: COMPLETATA
-- **File modificati**: 
-  - `src/services/i18n-service.js`
-  - `src/services/i18n-context.tsx`
+## Task: Integrazione completa avatar, riconoscimento vocale e i18n
+- **Stato**: IN CORSO
+- **File interessati**: 
+  - `src/components/simulation/AvatarComponent.tsx`
   - `src/components/simulation/VoiceRecognitionUI.tsx`
-- **Data**: 2025-03-17
-- **Note**: Separato servizio i18n puro dal React Context, creato file TypeScript appropriato per il context.
+  - `src/services/i18n-service.ts`
+- **Scadenza**: 2025-03-30
+- **Note**: Migliorare l'integrazione tra avatar 3D, sistema di riconoscimento vocale e supporto multilingua.
 
-## Task: Correzione percorso import video-transcoding-service
-- **Stato**: COMPLETATA
-- **File modificati**: `server/api-media.js`
-- **Data**: 2025-03-17
-- **Note**: Corretto percorso import da ../services/ a ./services/ per risolvere l'errore ERR_MODULE_NOT_FOUND 
+## Task: Sostituzione servizio OpenRouter con alternativa più economica
+- **Stato**: IN CORSO
+- **File interessati**: 
+  - `src/services/ai-service.ts`
+  - `server/api-ai.js`
+- **Scadenza**: 2025-04-10
+- **Note**: Valutare opzioni alternative come Anyscale API o Ollama self-hosted.
 
-## Task: Installazione dipendenze mancanti
-- **Stato**: COMPLETATA
-- **Dipendenze installate**: axios
-- **Data**: 2025-03-17
-- **Note**: Risolto problema ERR_MODULE_NOT_FOUND per axios richiesto da api-webhook.js
+## Task: Miglioramento performance caricamento avatar 3D
+- **Stato**: IN CORSO
+- **File interessati**:
+  - `src/components/simulation/AvatarComponent.tsx`
+  - `src/utils/performance-avatar-adapter.ts`
+  - `src/hooks/useAvatarPerformance.tsx`
+- **Scadenza**: 2025-04-05
+- **Note**: Ottimizzare il caricamento dei modelli 3D e migliorare il caching delle risorse.
 
-## Task: Fix registrazione utente con gestione robusta del database
+## Task: Setup repository GitHub e caricamento codice completo
 - **Stato**: COMPLETATA
-- **File modificati**: `server/api-auth.js`
-- **Data**: 2025-03-17
+- **Data**: 2025-03-19
 - **Note**: 
-  - Importato correttamente il metodo withRetry da mongodb.js
-  - Aggiunto try/catch robusto per operazioni DB
-  - Corretto errore di riferimento a variabili dopo blocchi condizionali
-  - Implementato pattern di ritorno anticipato per maggiore chiarezza
-
-## Task: Test avvio sistema completo
-- **Stato**: COMPLETATA
-- **Data**: 2025-03-17
-- **Note**: Verificato avvio backend (MongoDB + Express) e frontend (Vite) senza errori. Interfaccia login accessibile.
-
-## Riepilogo interventi
-
-I problemi affrontati erano:
-
-1. **Problema con i18n-service.js**: Conteneva codice JSX ma aveva estensione .js, causando errori di parsing in Vite.
-   - **Soluzione**: Separato il servizio i18n (logica pura) dai componenti React, creando `i18n-context.tsx` con tipizzazione TypeScript appropriata.
-
-2. **Problema percorso import in api-media.js**: Riferimento errato al modulo video-transcoding-service.js.
-   - **Soluzione**: Corretto il percorso da `../services/` a `./services/` per riflettere la struttura corretta delle directory.
-
-3. **Dipendenza mancante**: Il modulo axios non era installato ma richiesto da api-webhook.js.
-   - **Soluzione**: Installato axios con npm.
-
-4. **Errore in api-auth.js durante registrazione**: L'endpoint /register generava un errore `Cannot read properties of undefined (reading 'collection')` per mancata importazione di withRetry e altri problemi di implementazione.
-   - **Soluzione**: 
-     - Importato correttamente withRetry da mongodb.js
-     - Migliorata la struttura del codice con una gestione più robusta degli errori
-     - Corretto il flusso di esecuzione per evitare riferimenti a variabili non definite
-
-Questi interventi hanno ristabilito il corretto funzionamento sia del backend che del frontend, risolvendo completamente i problemi.
+  - Repository creato su GitHub: https://github.com/xQUANTUMTECH/ai-simulation2
+  - Configurato SSH con chiave di deploy
+  - Aggiornato README con descrizione completa del progetto
+  - Push del codice completato con successo
