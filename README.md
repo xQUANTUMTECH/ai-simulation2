@@ -1,6 +1,6 @@
 #  AI Academy
 
-Piattaforma di simulazione basata su intelligenza artificiale per Cafasso AI Academy.
+Piattaforma di simulazione basata su intelligenza artificiale per  AI Academy.
 
 ## Descrizione
 
